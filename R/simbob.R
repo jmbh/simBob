@@ -365,6 +365,10 @@
 #' @seealso \code{\link{qgraph}}
 #' @aliases simBob
 #' @examples \dontrun{
+#'
+#' #Show the network
+#' bob<-simBob(1,network_figures = TRUE)
+#'
 #' #Simulate one week of Bob his life and return the plots appropiate for
 #' #one simulation week and extended output.
 #' bob<-simBob(7,plot_week=TRUE,extended_output=TRUE)
