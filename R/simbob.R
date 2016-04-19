@@ -366,7 +366,7 @@
 #' @examples \dontrun{
 #'
 #' ##Show the network
-#' #bob<-simBob(1,network_figures = TRUE)
+#' bob<-simBob(1,network_figures = TRUE)
 #'
 #' #Simulate one week of Bob his life and return the plots appropiate for
 #' #one simulation week and extended output.
@@ -506,9 +506,9 @@ simBob<-function(t_days,
 
 
   ###Show network
-  #if (network_figures){
-  #  show_network()
-  #}
+  if (network_figures){
+    show_network()
+  }
 
   ### Define time scales and vector lengths
 

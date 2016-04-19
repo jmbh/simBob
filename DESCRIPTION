@@ -11,4 +11,5 @@ Description: A network simulation of daily behavior and emotions of Bob. Bob can
 License: GPL-2
 LazyData: TRUE
 RoxygenNote: 5.0.1
+Imports: qgraph (>= 1.3.2)
 
