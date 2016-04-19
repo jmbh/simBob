@@ -6,7 +6,9 @@ the mood and from social eating that projects on the appetite. Bob is also monit
 
 
 The R package can be installed using (if the devtools package is already installed):
+
 library('devtools')
+
 install_github('lisannehuurdeman/simBob')
 
 
