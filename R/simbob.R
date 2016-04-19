@@ -1,4 +1,4 @@
-#' @title Daily Behavior of Bob
+#' @title Daily Life of Bob
 #' @author Lisanne Huurdeman
 #'
 #' @description This function simulates different aspects of the daily life of a human called Bob. Bob sleeps, eats, works,
@@ -12,25 +12,33 @@
 #'
 #'
 #' @param t_days The number of days that will be simulated. A scalar is required as input.
+#'
 #' @param t_step The iteration time step in hours of the simulation. A scalar is required as input. The default value is
 #' 1/60, which corresponds to 1 minute.
+#'
 #' @param work The boolean that determines if Bob will have a job or not. The job is 5 days a week from 9.00 to 17.00 hours with
 #' lunch from 12.30 to 13.00 hours. A boolean or scalar is required as input. The default value is TRUE.
+#'
 #' @param body_weight The body weight in kg of Bob at the onset of the simulation. A scalar is required as input. The default
 #' value is 70 kg.
+#'
 #' @param c_BW The constant that determines the influence of the energy difference on the body weight. The energy difference
 #' is defined as the difference between food intake times a constant and the activity times a constant. The constant is comparable
 #' to the inverse energy density. The energy density depends among others on fat percentage and the type of tissues in the body.
 #' A scalar is required as input. The default value is 0.3.
+#'
 #' @param c_ee_work The constant that scales the energy expenditure (activity) before the body weight can be calculated when Bob
 #' has a job. This constant is the inverse average activity of a day, such that a change in activity is calculated as a relative
 #' change in the body weight. A scalar is required as input. The default value is 1/205.5.
+#'
 #' @param c_ee_nowork The constant that scales the energy expenditure (activity) before the body weight can be calculated when
 #' Bob is unemployed. This constant is the inverse average activity of a day, such that a change in activity is calculated as
 #' a relative change in the body weight. A scalar is required as input. The default value is 1/163.
+#'
 #' @param c_ei_work The constant that scales the energy intake (food intake) before the body weight can be calculated when Bob has a job.
 #' This constant is the inverse average food intake of a day, such that a change in food intake is calculated as a relative
 #' change in the body weight. A scalar is required as input. The default value is 1/80.3.
+#'
 #' @param c_ei_nowork The constant that scales the energy intake (food intake) before the body weight can be calculated when Bob is
 #' unemployed. This constant is the inverse average food intake of a day, such that a change in food intake is calculated as a relative
 #' change in the body weight. A scalar is required as input. The default value is 1/75.
@@ -40,104 +48,187 @@
 #' such that the sleep duration will be higher. When the parameter is lower the curve will decay more steep, the sleep duration will
 #' be shorter.  A scalar or vector of length N (24*t_step*t_days) is required as input.  The value of the time constant can be modified
 #' during the simulation.The default value is 4.2.
+#'
 #' @param tau_r The time constant of the rising part of the homeostatic sleep process. The rising time constant  determines
-#' the steepness of the rising curve and thus the timing of the sleep onset. Higher values of the rising time constant will
-#' approximately cause a later sleep onset, while  lower values of this time constant will result approximately in an  earlier
+#' the steepness of the rising curve and thus the timing of sleep onset. Higher values of the rising time constant will
+#' approximately cause a later sleep onset, even so  lower values of this time constant will result approximately in an  earlier
 #' sleep onset.  A scalar or vector of length N (24*t_step*t_days) is required as input. The value of the time constant can be
 #' modified during the simulation. The default value is 18.2.
+#'
 #' @param tau_dh The decaying time constant of the homeostatic hunger process. The decaying curve represents eating and the value
 #' of the time constant determines the steepness of the decaying curve. When the time constant is increased, the curve will be
-#' less steep and more time will be spend on eating, while when the time constant decreases, the curve will be more steep and
+#' less steep and more time will be spend on eating, even so when the time constant decreases, the curve will be more steep and
 #' less time will be spend on eating.  A scalar or vector of length N (24*t_step*t_days) is required as input. The value of the
 #' time constant can be modified during the simulation. The default value is 0.25.
-#' @param tau_rh The rising time constant for food while  awake. The rising factor is the build up of a hunger feeling. The rising
-#' factor determines the steepness of the curve and therefor how fast eating is required after the previous meal thus also how
-#' many meals a day are consumed. With a higher value of the time constant less meals per  day are consumed because there is more
-#' time between the meals. With a lower value of the time constant the homeostatic curve does rise faster so the time between meals
-#' is less and therefor more meals per day will be consumed.  A scalar or vector of length N (24*t_step*t_days) is required as input.
+#'
+#' @param tau_rh The rising time constant of the homeostatic hunger process while  awake. The rising curve represents the build up
+#' of a hunger feeling. The rising  time constant determines the steepness of the curve. Therefore, the time between meals, thus
+#' also how many meals a day are consumed. A higher value of the time constant results in less meals consumed per  day, because
+#' there is more time between the meals.
+#' A lower value of the time constant  results in a  faster rise of the homeostatic curve. Thus, the time between meals
+#' is less and therefore more meals per day will be consumed.  A scalar or vector of length N (24*t_step*t_days) is required as input.
 #' The value of the time constant can be modified during the simulation. The default value is 3.7.
-#' @param tau_rhs The rising time constant of hunger homeostatic process during sleep. This parameter has the same properties as
-#' $\tau_{rh}$.The rising time constant for food while  awake. The rising factor is the build up of a hunger feeling. The rising
-#' factor determines the steepness of the curve and therefor how fast eating is required after the previous meal thus also how
-#' many meals a day are consumed. With a higher value of the time constant less meals per  day are consumed because there is more
-#' time between the meals. With a lower value of the time constant the homeostatic curve does rise faster so the time between meals
-#' is less and therefor more meals per day will be consumed.  During sleep the build up of the hunger feeling is slower, therefor this parameter value is less than the value of
-#' $\tau_{rh}$.
+#'
+#' @param tau_rhs The rising time constant of the homeostatic hunger process during sleep. This parameter has the same properties as
+#' tau_rh. During sleep the build up of the hunger feeling is slower, therefore the default value is higher for this parameter in
+#' contrast to tau_rh.
 #' A scalar or vector of length N (24*t_step*t_days) is required as input. The value of the time constant can be modified
 #' during the simulation. The default value is 8.
-#' @param tau_c the circadian time constant. The default value is
-#' @param A_s the amplitude of the circadian sleep rhythm. The default value is
-#' @param A_h the amplitude of the circadian hunger rhythm. The default value is
-#' @param t_0s the time shift of the circadian sleep rhythm.The default value is
-#' @param t_0h the time shift of the circadian hunger rhythm.The default value is
-#' @param H_s The upper boundary of the sleep circadian rhythm.The default value is
-#' @param L_s The lower boundary of the sleep circadian rhythm.The default value is
-#' @param H_h The upper boundary of the hunger circadian rhythm.The default value is
-#' @param L_h The lower boundary of the hunger circadian rhythm.The default value is
+#'
+#' @param tau_c The period of the circadian rhythm in hours. One oscillation of the circadian process represents one day.
+#' A scalar is required as input. The default value is 24.
+#'
+#' @param A_s The amplitude of the circadian process of sleep that  scales how much influence the circadian
+#' rhythm has on sleep. When the amplitude is small the circadian rhythm is almost flat. Therefore, the rhythmic influence will be small.
+#' In contrast to a large amplitude that causes the rhythmic process to be influential on the sleep process.  A scalar or vector of
+#' length N (24*t_step*t_days) is required as input.
+#' The default value is 0.12.
+#'
+#' @param A_h The amplitude of the circadian process of the food intake process that scales how much influence the circadian oscillation
+#' has. A low amplitude results in a more flat circadian rhythm. Thus, the rhythmic influence of the circadian process will be small.
+#' A high amplitude results in more influence of the circadian rhythm on the food intake process. A scalar
+#' or vector of length N (24*t_step*t_days) is required as input.The default value is 0.14.
+#'
+#' @param t_0s The starting point of the circadian rhythm for the sleep process. This parameter executes a horizontal translation
+#' of the oscillations. This translation determines the phase of the circadian rhythm. A scalar is required as input.The default
+#' value is 9.8.
+#'
+#' @param t_0h The starting point of the circadian rhythm for the food intake process. This parameter executes a horizontal translation
+#' of the oscillations. This translation determines the phase of the circadian rhythm. A scalar is required as input. The default value is
+#'
+#' @param H_s The upper boundary of the sleep process. The upper limit is added to the circadian rhythm resulting in the upper threshold.
+#' The threshold influences the sleep onset.
+#' A higher boudary  will approximately cause a later sleep onset. Lowering the boundary will cause an earlier  sleep onset. The effect
+#' of a lower boundary can be compared with a person who is bored.
+#' A scalar or vector of length N (24*t_step*t_days) is required as input.
+#' The default value is 0.67.
+#'
+#' @param L_s  The lower boundary of the sleep process. The lower limit is added to the circadian rhythm resulting in the lower
+#' threshold. The threshold influences the wake onset. An increased lower boundary results in an earlier wake onset. In contrast
+#' to a decrease of the lower boundary that results in a later wake onset. A sudden increase of this boundary is compared with
+#' an alarm going off.
+#' A scalar or vector of length N (24*t_step*t_days) is required as input.
+#' The default value is 0.17.
+#'
+#' @param H_h The upper boundary of the food intake process. The upper limit is added to the circadian rhythm resulting in the upper
+#' threshold. The threshold influences the moment of food intake.
+#' A higher boudary  will approximately cause food intake at a later moment. Lowering the boundary will cause food intake to be earlier.
+#' A scalar or vector of length N (24*t_step*t_days) is required as input. The default value is 0.65.
+#'
+#' @param L_h  The lower boundary of the food intake process. The lower limit is added to the circadian rhythm resulting in the lower
+#' threshold. The threshold influences the moment of satisfaction that results in stopping with eating.
+#' An increased lower boundary results quicker in a satisfaction. In contrast to a decrease of the lower boundary that results
+#' in a longer period of food intake because of a later moment of satisfaction.
+#' A scalar or vector of length N (24*t_step*t_days) is required as input. The default value is 0.17.
+#'
 #' @param mu_a The mean of the distribution where from the activity intensity is drawn. The default value is
+#'
 #' @param sigma_a The standard deviation of the distribution where from the activity intensity is drawn. The default value is
+#'
 #' @param a_thres The threshold that the activity intensity has to reach to be executed. The default value is
+#'
 #' @param A_rest The activity intensity in rest. The default value is
+#'
 #' @param mu_a_night The mean of the distribution where from the activity intensity is drawn at night. The default value is
 #' so it might could be that at night you try to sleep, but cannot sleep and then you are less active than during the day.
 #' The default value is
+#'
 #' @param sigma_a_night The standard deviation of the distribution where from the activity intensity is drawn at night.
 #' The default value is
+#'
 #' @param a_thres_night The activity threshold at night. The default value is
+#'
 #' @param A_night The activity intensity at night. The default value is
+#'
 #' @param mu_a_work The mean of the distribution where from the activity intensity is drawn on a working day. Assuming that after
 #' a day of work the activity could be different than the activity when Bob has a day off. The default value is
+#'
 #' @param sigma_a_work The standard deviation of the distribution where from the activity intensity is drawn on a work day.
 #' The default value is
+#'
 #' @param A_work The activity intensity during working hours. The default value is
+#'
 #' @param standard_sleep The amount of sleep in hours that is standard or necessary. The default value is 7.88 hours.
+#'
 #' @param c_F The autoregressive constant of fatigue. The default value is
+#'
 #' @param c_FS The constant that determines the influence of sleep on fatigue. The default value is
+#'
 #' @param c_taudF the constant that determines the influence of fatigue on tau_d. The default value is
+#'
 #' @param c_taurF The constant that determines the influence of fatigue on tau_r. The default value is
+#'
 #' @param c_muF The constant that determines the influence of fatigue on mu_a. When fatigue is above higher than 5 then mu_a is lowered
 #' by fatigue times this constant. The default value of this constant is 1/60. The default value is
+#'
 #' @param c_app The autoregressive coefficient of appetite. The default value is 0.99. The default value is
+#'
 #' @param c_appH The constant that determines the influence of the homeostatic hunger feeling on the appetite. The default value is
+#'
 #' @param c_apploi The constant that determines the influence of the loss of interest on the appetite. The default value is
+#'
 #' @param c_appse The constant that determines the influence of the social eating on the appetite. The default value is
+#'
 #' @param c_taurapp_neg The constant that determines the influence of a negative appetite on the tau_rh (how fast a hunger
 #' feeling grows). The default value is
+#'
 #' @param c_taurapp_pos The constant that determines the influence of a positive appetite on the tau_rh (how fast a hunger
 #' feeling grows). The default value is
+#'
 #' @param social_eating Increases the appetite because of an external/social reason. For example, breakfast and lunch are regulated
 #' by social eating if work and social_eat_work are both true. The default value is
+#'
 #' @param loss_int Loss of interest determines if you feel like eating and activity. The default value is
 #' Loss of interest can only be positive and is also influenced by the mood. A scalar as basic value can be given or vector
 #' of the length of the time series (t_step*24*t_days). The default value is
+#'
 #' @param home_base The constant that determines the default mood value. The home base determines where the attractor point of
 #' the mood is. The default value is
+#'
 #' @param attrac_strength The strength of the attractor pulling on the mood. The default value is
+#'
 #' @param c_M The autoregressive coefficient of the mood. The default value is
+#'
 #' @param a1 The constant that determines the influence of activity on the mood. The default value is
+#'
 #' @param a2 The constant that determines the influence of fatigue on the mood. The default value is
+#'
 #' @param a3 The constant that determines the influence of appetite on the mood. The default value is
+#'
 #' @param a4 The constant that determines the influence of weight difference between body_weight and current weight on the mood.
 #' The default value is
+#'
 #' @param a5 The constant that determines the influence of sleep on the mood.The default value is
+#'
 #' @param a6 The constant that determines the influence of the external misery on the mood. The default value is
+#'
 #' @param c_muM The constant that determines the influence of the mood on mu_a, the mean of the distribution where from the activity
 #' intensity is drawn. The default value is
+#'
 #' @param c_muloi The constant that determines the influence of the loss of interest on mu_a. The mean of the distribution where from
 #' the activity intensity is drawn. The default value is
+#'
 #' @param c_loiM The constant that determines the influence of the mood on the loss of interest. The default value is
+#'
 #' @param c_taurM The constant that determines the influence of the mood on tau_r, thus how the mood determines the sleeping
 #' pattern. The default value is
+#'
 #' @param external_misery External misery is input from the external world and can represent positive and negative events.
 #' A scalar as default value can be given or a vector of the same length as the time axis (length(t)->t_step*24*t_days).
 #' The default value is
+#'
 #' @param social_eat_work If breakfast and lunch are stimulated by social eating or not when Bob has work. The default value is
+#'
 #' @param extended_output The output consists all the default values of all the different parameters. The default value is
+#'
 #' @param minimal_output The minimal output only returns the time series of the variables, but no parameter values.
 #' The default value is
+#'
 #' @param plot_week Plots will be made that are insightful for time series around one week (7 days). The default value is
+#'
 #' @param plot_months Plots of time series longer than weeks. The plots are made of mean or total daily value of the different
 #' variables. The default value is
+#'
 #' @param network_figures If TRUE this will return to pictures of the network. The first figure shows the simulated
 #' network with all the edges and nodes. The second figure shows the network with all the parameters that are used
 #' plotted in or on the node or connection. The default value is
@@ -272,20 +363,62 @@
 #'
 #' @export
 #' @seealso \code{\link{qgraph}}
-#' @aliases simbob bob bobsim Bobsim SimBob BobSim
+#' @aliases simBob
 #' @examples \dontrun{
-#' #Simulate one week of Bob his life and as output the plots and extended output will be given.
+#' #Simulate one week of Bob his life and return the plots appropiate for
+#' #one simulation week and extended output.
 #' bob<-simBob(7,plot_week=TRUE,extended_output=TRUE)
 #'
 #' #Simulate again one week but now Bob is unemployed.
 #' bob<-simBob(7,work=FALSE,plot_week=TRUE,extended_output=TRUE)
 #'
-#' #Simulate a whole year of Bob is his and return the appropriate plots.
+#' #Simulate a whole year of Bob his life and return the appropriate plots.
 #' #To save memory only the minimal output will be returned with these options.
 #' bob<-simBob(365,plot_months=TRUE,minimal_output=TRUE)
 #'
 #' #The mean mood over the whole simulation is:
 #' mean_mood<-mean(bob$mood$mood)
+#'
+#' #An example with external misery as input
+#'
+#' t_days<-100
+#' t_step<-1/60; #hours, so time steps of a minute
+#' t_end<-24*t_days; #convert end time in hours
+#' t<-seq(from=0,to=(t_end-t_step),by=t_step); #make time vector
+#'
+#' #Create a Gaussian for the external input
+#' mean_mis=24*30; sigma_mis=24*10; #The mean and standard deviation times 24 so it is in days
+#' external_misery<- 2*(2*sqrt(2*pi)*sigma_mis*dnorm(t, mean=mean_mis,sd=sigma_mis))
+#'
+#' #Run the simulation with the external misery input and
+#' #return plots for simulations longer than a week
+#' bob<-simBob(t_days=t_days,external_misery = external_misery,plot_months = TRUE)
+#'
+#' # Rename the depression variables
+#' depression<-bob$depression$depression
+#' depressed<-bob$depression$symptoms_14days
+#' depression_symp<-bob$depression$symptoms_day
+#'
+#' day_vec<-bob$other$t_day
+#' lwd<-2
+#'
+#' plot(day_vec,colSums(depression_symp),bty='l',
+#'      col='black',
+#'      type='l',
+#'      lwd=lwd,
+#'      xlab='day',
+#'      ylab='number of symptoms' ,
+#'      las=1)
+#'
+#' plot(day_vec,depression,bty='l',
+#'      col='black',
+#'      type='l',
+#'      lwd=lwd,
+#'      xlab='day',
+#'      ylab='Number of symptoms more than 2 weeks' ,
+#'      las=1)
+
+
 #'
 #'}
 

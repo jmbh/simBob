@@ -1,7 +1,6 @@
 plot_month<-function(days,t,S,H,A,W,F,loi,M,EM){
 
-
-#dev.new()
+dev.new(noRStudioGD = TRUE)
 #sleep
 plot(days,S,
 			bty='l',
@@ -12,7 +11,7 @@ plot(days,S,
 			ylab='sleep hours per day')
 title('Hours of sleep per day')
 
-#dev.new()
+dev.new(noRStudioGD = TRUE)
 #hunger
 plot(days,H,
 			col='black',
@@ -25,7 +24,7 @@ plot(days,H,
 title('Minutes per day spend eating')
 
 
-#dev.new()
+dev.new(noRStudioGD = TRUE)
 #activity
 plot(days,A,
 			col='black',
@@ -37,7 +36,7 @@ plot(days,A,
 			ylab='activity intensity in minutes per day')
 title('Minutes times activity intensity per day')
 
-#dev.new()
+dev.new(noRStudioGD = TRUE)
 #weight
 plot(days,W,
 			col='black',
@@ -49,7 +48,7 @@ plot(days,W,
 			ylab='kg')
 title('Body weight')
 
-#dev.new()
+dev.new(noRStudioGD = TRUE)
 #fatigue
 plot(days,F,
 			col='black',
@@ -61,7 +60,7 @@ plot(days,F,
 			ylab='fatigue')
 title('Fatigue')
 
-#dev.new()
+dev.new(noRStudioGD = TRUE)
 #loss of interest
 plot(t/24,loi,
 			col='black',
@@ -73,7 +72,7 @@ plot(t/24,loi,
 			ylab='Loss of interest')
 title('Loss of interest')
 
-#dev.new()
+dev.new(noRStudioGD = TRUE)
 #mood
 plot(days,M,
 			col='black',
@@ -86,8 +85,8 @@ plot(days,M,
 title('Mean mood per day')
 
 if (sum(EM)!=0){
-#	dev.new()
-	#external misery
+  dev.new(noRStudioGD = TRUE)
+  #external misery
 	plot(t/24,EM,
 				col='black',
 				bty='l',
