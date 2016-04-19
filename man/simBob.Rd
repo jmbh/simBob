@@ -386,8 +386,8 @@ The only input required is t_days, the number of days that should be simulated.
 \examples{
 \dontrun{
 
-#Show the network
-bob<-simBob(1,network_figures = TRUE)
+##Show the network
+#bob<-simBob(1,network_figures = TRUE)
 
 #Simulate one week of Bob his life and return the plots appropiate for
 #one simulation week and extended output.

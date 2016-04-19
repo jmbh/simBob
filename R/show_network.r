@@ -1,6 +1,6 @@
 # #' @title Network figures of Bob
 # #' @author Lisanne Huurdeman
-#' @import qgraph
+
 # #' @description Shows the network that is used to simulate Bob. Returns two figures, first figure is the normal network,
 # #'              second figure is the network with all the parameters at the location where they are used.
 

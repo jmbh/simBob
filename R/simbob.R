@@ -363,11 +363,10 @@
 #'
 #' @export
 #' @seealso \code{\link{qgraph}}
-#' @aliases simBob
 #' @examples \dontrun{
 #'
-#' #Show the network
-#' bob<-simBob(1,network_figures = TRUE)
+#' ##Show the network
+#' #bob<-simBob(1,network_figures = TRUE)
 #'
 #' #Simulate one week of Bob his life and return the plots appropiate for
 #' #one simulation week and extended output.
@@ -421,8 +420,6 @@
 #'      xlab='day',
 #'      ylab='Number of symptoms more than 2 weeks' ,
 #'      las=1)
-
-
 #'
 #'}
 
@@ -509,9 +506,9 @@ simBob<-function(t_days,
 
 
   ###Show network
-  if (network_figures){
-    show_network()
-  }
+  #if (network_figures){
+  #  show_network()
+  #}
 
   ### Define time scales and vector lengths
 
