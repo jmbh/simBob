@@ -82,7 +82,7 @@ layout[1,2]<-8
 layout[1,6]<-9
 layout[1,1]<-10
 
-dev.new(noRStudioGD = TRUE)
+# dev.new(noRStudioGD = TRUE)
 q<-qgraph(net,labels=label,
 	   shape=shape,
 	   label.scale=FALSE,
