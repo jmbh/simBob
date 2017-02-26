@@ -156,7 +156,7 @@ epos[7]<-0.54;
 epos[11]<-0.6;
 epos[23]<-0.3;
 
-dev.new(noRStudioGD = TRUE)
+# dev.new(noRStudioGD = TRUE)
 qgraph(net,labels=label_para,
        #directed=d,
 	   shape=shape,
