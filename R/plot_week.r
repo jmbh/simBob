@@ -37,7 +37,7 @@ eat_plot<-rep(0,length(t_eat));
 
 ###plotting
 
-dev.new(noRStudioGD = TRUE)
+# dev.new(noRStudioGD = TRUE)
 plot(t/24,Cs_low,
 			bty='l',
 			bty='l',
@@ -65,7 +65,7 @@ plot(days,F,bty='l',
 				   las=1)
 title('Fatigue')
 
-dev.new(noRStudioGD = TRUE)
+# dev.new(noRStudioGD = TRUE)
 plot(t/24,A,
 			bty='l',
 			col='black',
@@ -84,7 +84,7 @@ legend('topright', c('Activity', 'Sleeping', 'Eating'),
 	   )
 title('Daily behaviour')
 
-dev.new(noRStudioGD = TRUE )
+# dev.new(noRStudioGD = TRUE )
 plot(t/24,Ch_low,
 			bty='l',
 			col='red',
@@ -101,7 +101,7 @@ points(t_eat/24,eat_plot+min(Ch_low)-0.015,pch=19,lwd=0.5,col='black',cex=0.5)
 title('Eating pattern')
 
 
-dev.new(noRStudioGD = TRUE)
+# dev.new(noRStudioGD = TRUE)
 plot(t/24,App,bty='l',
 				   col='black',
 				   type='l',
@@ -130,7 +130,7 @@ legend('topright', c('Mood', 'Home base'),
 	   bty='l'
 	   )
 
-dev.new(noRStudioGD = TRUE)
+# dev.new(noRStudioGD = TRUE)
 plot(t/24,loi,
 			bty='l',
 			col='black',
@@ -142,7 +142,7 @@ plot(t/24,loi,
 title('Loss of interest')
 
 if (sum(EM)!=0){
-  dev.new(noRStudioGD = TRUE)
+  # dev.new(noRStudioGD = TRUE)
   #external misery
 	plot(t/24,EM,
 				col='black',
