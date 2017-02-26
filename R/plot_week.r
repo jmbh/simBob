@@ -55,7 +55,7 @@ lines(t/24,S,col='black',lwd=lwd)
 points(t_sleep/24,sleep_plot+min(Cs_low)-0.015,pch=19,lwd=0.5,col='black',cex=0.5)
 title('Sleep pattern')
 
-dev.new(noRStudioGD = TRUE)
+# dev.new(noRStudioGD = TRUE)
 plot(days,F,bty='l',
 				   col='black',
 				   type='l',
@@ -111,7 +111,7 @@ plot(t/24,App,bty='l',
 				   ylab='Appetite')
 title('Appetite')
 
-dev.new(noRStudioGD = TRUE)
+# dev.new(noRStudioGD = TRUE)
 plot(t/24,M
 			,bty='l',
 			col='black',
